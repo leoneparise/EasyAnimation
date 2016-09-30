@@ -67,7 +67,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     //MARK: - Animation lifecycle
     
     init() {
-        EAAnimationDelayed.debugCount++
+        EAAnimationDelayed.debugCount += 1
         self.debugNumber = EAAnimationDelayed.debugCount
         if debug {
             print("animation #\(self.debugNumber)")
@@ -109,16 +109,16 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         return anim
     }
     
-    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, var options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        
-        if options.contains(.Repeat) {
-            options.remove(.Repeat)
+    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        var opts = options
+        if opts.contains(.Repeat) {
+            opts.remove(.Repeat)
             loopsChain = true
         }
         
         self.duration = duration
         self.delay = delay
-        self.options = options
+        self.options = opts
         self.animations = animations
         self.completion = completion
         
